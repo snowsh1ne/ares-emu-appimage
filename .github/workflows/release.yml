@@ -26,12 +26,15 @@ jobs:
         run: |
           git clone -b $MAJOR_VERSION https://github.com/ares-emulator/ares src
           cd src
+          pwd
           make clean
           make -j $(nproc) build=release
 
       - name: Build appimage
         run: |
           cd ..
+          pwd
+          ls
           export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
           mkdir -p AppDir/usr/bin
           cp src/desktop-ui/out/ares AppDir/usr/bin/
