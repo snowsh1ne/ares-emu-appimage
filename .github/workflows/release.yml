@@ -24,7 +24,7 @@ jobs:
 
       - name: Build ares
         run: |
-          git clone -b $MAJOR_VERSION https://github.com/ares-emulator/ares /src
+          git clone -b $MAJOR_VERSION https://github.com/ares-emulator/ares src
           cd src
           make clean
           make -j $(nproc) build=release
@@ -33,12 +33,12 @@ jobs:
         run: |
           cd ..
           export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
-          mkdir -p /AppDir/usr/bin
-          cp /src/desktop-ui/out/ares /AppDir/usr/bin/
-          mkdir -p /AppDir/usr/share/metainfo
-          cp /net.ares.emu.appdata.xml /AppDir/usr/share/metainfo/
-          mv /src/desktop-ui/resource/ares.desktop /src/desktop-ui/resource/net.ares.emu.desktop
-          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir=/AppDir --output=appimage --desktop-file=/src/desktop-ui/resource/net.ares.emu.desktop --deploy-deps-only=/AppDir/usr/bin    --icon-file=/src/desktop-ui/resource/ares.png
+          mkdir -p AppDir/usr/bin
+          cp src/desktop-ui/out/ares AppDir/usr/bin/
+          mkdir -p AppDir/usr/share/metainfo
+          cp net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
+          mv src/desktop-ui/resource/ares.desktop src/desktop-ui/resource/net.ares.emu.desktop
+          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir=AppDir --output=appimage --desktop-file=src/desktop-ui/resource/net.ares.emu.desktop --deploy-deps-only=AppDir/usr/bin --icon-file=src/desktop-ui/resource/ares.png
 
       - name: release
         uses: "marvinpinto/action-automatic-releases@6273874b61ebc8c71f1a61b2d98e234cf389b303"
