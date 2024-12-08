@@ -25,7 +25,6 @@ jobs:
           git clone -b $MAJOR_VERSION https://github.com/ares-emulator/ares
           cd ares
           mkdir AppDir
-          pwd
           make clean
           make -j$(nproc) build=release
           make install DESTDIR=AppDir
@@ -35,17 +34,14 @@ jobs:
           cd ares
           wget https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-x86_64.AppImage
           chmod +x linuxdeploy-x86_64.AppImage
-          pwd
-          ls
           export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
+          export LD_LIBRARY_PATH=AppDir/usr/lib
           mkdir -p AppDir/usr/bin
           cp desktop-ui/out/ares AppDir/usr/bin/
           mkdir -p AppDir/usr/share/metainfo
           cp ../net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
           cp desktop-ui/resource/ares.desktop desktop-ui/resource/net.ares.emu.desktop
-          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir=AppDir --output=appimage --desktop-file=desktop-ui/resource/net.ares.emu.desktop --deploy-deps-only=AppDir/usr/bin --icon-file=desktop-ui/resource/ares.png
-          pwd
-          ls
+          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir=AppDir --output=appimage --desktop-file=desktop-ui/resource/net.ares.emu.desktop --icon-file=desktop-ui/resource/ares.png
 
       - name: release
         uses: "marvinpinto/action-automatic-releases@latest"
