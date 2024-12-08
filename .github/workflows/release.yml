@@ -24,6 +24,7 @@ jobs:
         run: |
           git clone -b $MAJOR_VERSION https://github.com/ares-emulator/ares
           cd ares
+          mkdir AppDir
           pwd
           make clean
           make -j$(nproc) build=release
@@ -40,7 +41,7 @@ jobs:
           mkdir -p AppDir/usr/bin
           cp desktop-ui/out/ares AppDir/usr/bin/
           mkdir -p AppDir/usr/share/metainfo
-          cp net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
+          cp ../net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
           cp desktop-ui/resource/ares.desktop desktop-ui/resource/net.ares.emu.desktop
           ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir=AppDir --output=appimage --desktop-file=desktop-ui/resource/net.ares.emu.desktop --deploy-deps-only=AppDir/usr/bin --icon-file=desktop-ui/resource/ares.png
           pwd
