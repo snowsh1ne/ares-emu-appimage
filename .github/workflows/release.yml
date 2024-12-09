@@ -26,22 +26,26 @@ jobs:
           cd ares
           mkdir AppDir
           make clean
-          make -j$(nproc) install build=release hiro=gtk3 local=false platform=linux DESTDIR=AppDir
+          make -j$(nproc) install build=release hiro=gtk3 local=false platform=linux prefix=AppDir
 
       - name: Build appimage
         run: |
           cd ares
           wget https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh
+          wget https://github.com/darealshinji/linuxdeploy-plugin-checkrt/releases/download/continuous/linuxdeploy-plugin-checkrt.sh
           wget https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-x86_64.AppImage
-          chmod +x linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
+          chmod +x linuxdeploy-plugin-gtk.sh linuxdeploy-plugin-checkrt.sh linuxdeploy-x86_64.AppImage
           export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
           export LD_LIBRARY_PATH=AppDir/usr/lib
           mkdir -p AppDir/usr/bin
           cp desktop-ui/out/ares AppDir/usr/bin/
+          mkdir -p AppDir/usr/share/ares
+          cp -r desktop-ui/out/Database AppDir/usr/share/ares/
+          cp -r desktop-ui/out/Shaders AppDir/usr/share/ares/
           mkdir -p AppDir/usr/share/metainfo
           cp ../net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
           cp desktop-ui/resource/ares.desktop desktop-ui/resource/net.ares.emu.desktop
-          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir --plugin gtk --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png
+          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir --plugin gtk --plugin checkrt --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png
 
       - name: release
         uses: "marvinpinto/action-automatic-releases@latest"
