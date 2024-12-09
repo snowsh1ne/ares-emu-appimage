@@ -24,9 +24,9 @@ jobs:
         run: |
           git clone -b $MAJOR_VERSION https://github.com/ares-emulator/ares
           cd ares
-          mkdir AppDir
+          mkdir -p AppDir/usr
           make clean
-          make -j$(nproc) install build=release hiro=gtk3 local=false platform=linux prefix=AppDir
+          make -j$(nproc) install build=release hiro=gtk3 local=false platform=linux prefix=../AppDir/usr
 
       - name: Build appimage
         run: |
@@ -37,11 +37,6 @@ jobs:
           chmod +x linuxdeploy-plugin-gtk.sh linuxdeploy-plugin-checkrt.sh linuxdeploy-x86_64.AppImage
           export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
           export LD_LIBRARY_PATH=AppDir/usr/lib
-          mkdir -p AppDir/usr/bin
-          cp desktop-ui/out/ares AppDir/usr/bin/
-          mkdir -p AppDir/usr/share/ares
-          cp -r desktop-ui/out/Database AppDir/usr/share/ares/
-          cp -r desktop-ui/out/Shaders AppDir/usr/share/ares/
           mkdir -p AppDir/usr/share/metainfo
           cp ../net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
           cp desktop-ui/resource/ares.desktop desktop-ui/resource/net.ares.emu.desktop
