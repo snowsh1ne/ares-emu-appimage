@@ -26,8 +26,7 @@ jobs:
           cd ares
           mkdir AppDir
           make clean
-          make -j$(nproc) build=release
-          make install DESTDIR=AppDir
+          make -j$(nproc) -C desktop-ui install build=release hiro=gtk3 local=false platform=linux
 
       - name: Build appimage
         run: |
