@@ -18,30 +18,34 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get upgrade -y
-          sudo apt-get install -y g++ make pkg-config libgtk-3-dev libcanberra-gtk-module libcanberra-gtk3-module libgl-dev libasound2-dev libao-dev libopenal-dev libsdl2-dev libsdl2-2.0-0 git wget file gpg appstream libfuse2t64 pkgconf dpkg-dev
+          sudo apt-get install -y build-essential cmake pkg-config curl git clang ninja-build ccache
+          sudo apt-get install -y wget file gpg appstream libfuse2t64 pkgconf
+          sudo apt-get install -y libgtk-3-dev libcanberra-gtk-module libgl-dev libasound2-dev libao-dev libopenal-dev libsdl2-dev libpulse-dev libudev-dev
 
       - name: Build ares
         run: |
-          git clone -b $MAJOR_VERSION https://github.com/ares-emulator/ares
+          git clone https://github.com/ares-emulator/ares
           cd ares
           mkdir -p AppDir/usr
-          make clean
-          make -j$(nproc) install build=release hiro=gtk3 local=false platform=linux prefix=../AppDir/usr
+          mkdir build && cd build
+          cmake .. -G Ninja
+          cmake --build . -j$(nproc)
+          cmake --install . --prefix ../AppDir/usr
 
       - name: Build appimage
         run: |
+          export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
+          export LD_LIBRARY_PATH=AppDir/usr/lib
+          export DEPLOY_GTK_VERSION=3
           cp linuxdeploy-x86_64.AppImage ares/
           cd ares
           wget https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh
-          wget https://github.com/darealshinji/linuxdeploy-plugin-checkrt/releases/download/continuous/linuxdeploy-plugin-checkrt.sh
-          chmod +x linuxdeploy-plugin-gtk.sh linuxdeploy-plugin-checkrt.sh linuxdeploy-x86_64.AppImage
-          export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
-          export LD_LIBRARY_PATH=AppDir/usr/lib
+          chmod +x linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
           mkdir -p AppDir/usr/share/metainfo
           cp ../net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
           cp desktop-ui/resource/ares.desktop desktop-ui/resource/net.ares.emu.desktop
           mkdir -p AppDir/usr/lib
-          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir --plugin gtk --plugin checkrt --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png
+          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir --plugin gtk --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png
 
       - name: release
         uses: "marvinpinto/action-automatic-releases@latest"
