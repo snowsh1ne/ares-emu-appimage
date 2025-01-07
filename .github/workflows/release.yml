@@ -49,7 +49,7 @@ jobs:
           cp ../net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
           cp desktop-ui/resource/ares.desktop desktop-ui/resource/net.ares.emu.desktop
           mkdir -p AppDir/usr/lib
-          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir --plugin gtk --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png
+          ./linuxdeploy-x86_64.AppImage --appimage-extract-and-run --appdir AppDir --plugin gtk --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png --library /usr/lib/x86_64-linux-gnu/librashader.so
 
       - name: release
         uses: "marvinpinto/action-automatic-releases@latest"
