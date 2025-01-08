@@ -52,8 +52,8 @@ jobs:
         run: |
           cd SDL/build
           cmake .. -DCMAKE_BUILD_TYPE=Release
-          cmake --build . --config Release --parallel
-          sudo cmake --install . --config Release --prefix ../../ares/AppDir/usr
+          cmake --build . -j$(nproc) --config Release --parallel
+          cmake --install . --config Release --prefix ../../ares/AppDir/usr
 
       - name: Build appimage
         run: |
