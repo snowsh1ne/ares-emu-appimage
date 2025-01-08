@@ -36,7 +36,7 @@ jobs:
           mkdir build && cd build
           ../configure
           make -j$(nproc)
-          make install
+          sudo make install
           mkdir -p /ares/AppDir/usr
           ../configure --prefix /ares/AppDir/usr
           make -j$(nproc)
