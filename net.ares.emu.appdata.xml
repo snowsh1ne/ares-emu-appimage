@@ -2,7 +2,7 @@
 <component type="desktop-application">
     <id>net.ares.emu</id>
     <metadata_license>MIT</metadata_license>
-    <project_license>ISC</project_license>
+    <project_license>MIT</project_license>
     <name>ares</name>
     <summary>ares is a multi-system emulator, focusing on accuracy and preservation</summary>
     <description>
