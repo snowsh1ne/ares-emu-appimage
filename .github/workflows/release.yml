@@ -32,7 +32,7 @@ jobs:
 
       - name: Build ares
         run: |
-          git clone https://github.com/ares-emulator/ares
+          git clone -b $MAJOR_VERSION https://github.com/ares-emulator/ares
           cd ares
           mkdir -p AppDir/usr
           mkdir build && cd build
