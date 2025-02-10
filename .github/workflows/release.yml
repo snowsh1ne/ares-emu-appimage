@@ -45,8 +45,8 @@ jobs:
           export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
           export LD_LIBRARY_PATH=AppDir/usr/lib
           export DEPLOY_GTK_VERSION=3
-          cp linuxdeploy-x86_64.AppImage ares/
           cd ares
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-x86_64.AppImage
           wget https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh
           chmod +x linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
           mkdir -p AppDir/usr/share/metainfo
@@ -58,5 +58,6 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           prerelease: false
+          draft: true
           files: /home/runner/work/ares-emu-appimage/ares-emu-appimage/ares/ares*.AppImage*
           repo_token: ${{ secrets.GITHUB_TOKEN }}
