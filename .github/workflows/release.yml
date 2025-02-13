@@ -38,7 +38,7 @@ jobs:
           mkdir build && cd build
           cmake .. -G Ninja
           cmake --build . -j$(nproc)
-          cmake --install . --prefix ../AppDir/usr
+          cmake --install . --strip --prefix ../AppDir/usr
 
       - name: Build appimage
         run: |
