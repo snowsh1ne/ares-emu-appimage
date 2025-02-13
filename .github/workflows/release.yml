@@ -47,13 +47,13 @@ jobs:
           export LD_LIBRARY_PATH=AppDir/usr/lib
           export DEPLOY_GTK_VERSION=3
           cd ares
-          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/2.0.0-alpha-1-20241106/linuxdeploy-static-x86_64.AppImage
+          wget https://github.com/linuxdeploy/linuxdeploy/releases/download/1-alpha-20250213-2/linuxdeploy-x86_64.AppImage
           wget https://raw.githubusercontent.com/linuxdeploy/linuxdeploy-plugin-gtk/master/linuxdeploy-plugin-gtk.sh
-          chmod +x linuxdeploy-plugin-gtk.sh linuxdeploy-static-x86_64.AppImage
+          chmod +x linuxdeploy-plugin-gtk.sh linuxdeploy-x86_64.AppImage
           mkdir -p AppDir/usr/share/metainfo
           cp ../net.ares.emu.appdata.xml AppDir/usr/share/metainfo/
           cp desktop-ui/resource/ares.desktop desktop-ui/resource/net.ares.emu.desktop
-          ./linuxdeploy-static-x86_64.AppImage --appdir AppDir --plugin gtk --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png --library /usr/lib/x86_64-linux-gnu/librashader.so
+          ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin gtk --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png --library /usr/lib/x86_64-linux-gnu/librashader.so
 
       - name: release
         uses: "marvinpinto/action-automatic-releases@latest"
