@@ -57,7 +57,7 @@ jobs:
           ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin gtk --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png --library /usr/lib/x86_64-linux-gnu/librashader.so
 
       - name: Upload AppImage as Artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: ares_AppImage
           path: /home/runner/work/ares-emu-appimage/ares-emu-appimage/ares/ares*.AppImage*
