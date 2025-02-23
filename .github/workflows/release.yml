@@ -42,6 +42,7 @@ jobs:
 
       - name: Build appimage
         run: |
+          export OUTPUT="ares-v${{ github.ref_name }}-x86_64.AppImage"
           export LINUXDEPLOY_OUTPUT_VERSION="${MAJOR_VERSION}"
           export APPIMAGE_EXTRACT_AND_RUN=1
           export LD_LIBRARY_PATH=AppDir/usr/lib
