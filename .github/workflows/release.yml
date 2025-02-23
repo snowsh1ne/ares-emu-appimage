@@ -56,10 +56,4 @@ jobs:
           cp desktop-ui/resource/ares.desktop desktop-ui/resource/net.ares.emu.desktop
           ./linuxdeploy-x86_64.AppImage --appdir AppDir --plugin gtk --output appimage --desktop-file desktop-ui/resource/net.ares.emu.desktop --icon-file desktop-ui/resource/ares.png --library /usr/lib/x86_64-linux-gnu/librashader.so
 
-      - name: release
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          prerelease: false
-          draft: true
-          files: /home/runner/work/ares-emu-appimage/ares-emu-appimage/ares/ares*.AppImage*
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
+
